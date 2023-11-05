@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/Interface/products';
-
+import { ProductsService } from 'src/app/services/products.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,13 +8,18 @@ import { Product } from 'src/app/Interface/products';
 })
 export class HomeComponent implements OnInit{
   products: Product[] = [];
-  constructor() { }
+  constructor(private productService: ProductsService) { }
   
   ngOnInit(): void {
-    this.products.push(new Product("Banana", 3, "Fruit", "assets/Pictures/banana.png"));
-    this.products.push(new Product("Kiwi", 10, "Fruit", "assets/Pictures/kiwi.png"));
-    this.products.push(new Product("Orange", 7, "Fruit", "assets/Pictures/orange.png"));
-    this.products.push(new Product("Strawberry", 20, "Fruit", "assets/Pictures/strawberry.png"));
+    this.productService.getAllProducts().subscribe(data => {
+      if(data && data.length > 0) {
+        for(let i = 0; i < data.length; i++) {
+          if(data[i].name && data[i].price && data[i].productPath) {
+            this.products.push(new Product(data[i].name, data[i].price, data[i].productPath));
+          }
+        }
+      }
+    });
   }
 
   addToCart(i: number) {
