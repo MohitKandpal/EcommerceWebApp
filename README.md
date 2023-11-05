@@ -1,1 +1,1 @@
-# EcommerceWebApp
+This repository contains the code for an Ecommerce Web application created during Angular certification course from Udemy. Front end is created using Angular and for backend Firebase Database has been used. 
