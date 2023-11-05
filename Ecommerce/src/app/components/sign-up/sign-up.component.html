@@ -1,1 +1,42 @@
-<p>sign-up works!</p>
+<div class="body">
+    <h2 class="text-center">Sign Up</h2>
+    <form #f="ngForm" (ngSubmit)="signup(f)">
+        <input ngModel name="name" #name="ngModel" type="text" class="form-control" placeholder="Name" required /><br>
+        <div class="alert alert-danger" *ngIf="name.invalid && name.touched">Name is required</div>
+
+        <input ngModel name="email" #email="ngModel" type="text" class="form-control" placeholder="Email" required
+            email /><br>
+        <div class="alert alert-danger" *ngIf="email.errors?.['required'] && email.touched">
+            Email is required
+        </div>
+        <div class="alert alert-danger" *ngIf="email.errors?.['email'] && email.touched">
+            Email Format is incorrect
+        </div>
+
+        <input ngModel name="password" #password="ngModel" type="password" class="form-control" placeholder="Password"
+            required minlength="6" /><br>
+        <div class="alert alert-danger" *ngIf="password.errors?.['required'] && password.touched">
+            Password is required
+        </div>
+        <div class="alert alert-danger" *ngIf="password.errors?.['minlength'] && password.touched">
+            Passsword should be at least 6 characters.
+        </div>
+
+        <input ngModel name="confirmpassword" #confirmpassword="ngModel" type="password" class="form-control" placeholder="Confirm Password"
+            required /><br>
+        <div class="alert alert-danger" *ngIf="confirmpassword.errors?.['required'] && confirmpassword.touched">
+            Confirm password is required.
+        </div>
+        <div class="alert alert-danger" *ngIf="password.value != confirmpassword.value">
+            Password does not match.
+        </div>
+
+        <input ngModel name="address" #address="ngModel" type="text" class="form-control" placeholder="Address" required /><br>
+        <div class="alert alert-danger" *ngIf="address.invalid && address.touched">
+            Address is required.
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Create an account</button>
+    </form>
+</div>
+
+<div class="alert alert-danger" *ngIf="errorMessage != ''">{{ errorMessage }}</div>
