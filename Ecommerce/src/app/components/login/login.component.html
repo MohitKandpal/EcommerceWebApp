@@ -16,5 +16,5 @@
         Password should be at least 6 characters long.
     </div>
 
-    <button class="btn btn-primary" [disabled]="f.invalid">Login</button>
+    <button class="btn btn-primary" [disabled]="f.invalid" (click)="login(f)">Login</button>
 </form>
