@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/Interface/products';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 @Component({
@@ -10,7 +12,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class HomeComponent implements OnInit{
   products: Product[] = [];
   add: number = -1;
-  constructor(private productService: ProductsService, private cart: CartService) { }
+  constructor(private productService: ProductsService, private cart: CartService, private as: AuthService, private router: Router) { }
   
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe(data => {
@@ -30,7 +32,11 @@ export class HomeComponent implements OnInit{
    * @param i : index of product
    */
   addToCart(i: number) {
-    this.add = +i;
+    if(this.as.userId) {
+      this.add = +i;
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   /**
