@@ -9,15 +9,16 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { GuardService } from './services/guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'account', component: AccountComponent, canActivate:[GuardService] },
+  { path: 'cart', component: CartComponent, canActivate:[GuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'orders', component: OrdersComponent },
-  { path: 'products', component: ProductsComponent },
+  { path: 'products', component: ProductsComponent, canActivate:[GuardService] },
   { path: 'signup', component: SignUpComponent },
   { path: '**', component: NotFoundComponent }
 ];
